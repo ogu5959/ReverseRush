@@ -1,3 +1,4 @@
+const request = require('request')
 const config = require('./config')
 
 // 25개 전화번호를 가진 리스트 필요
@@ -25,6 +26,20 @@ const main = () => {
     }
 }
 
+// API Call 함수
+const call = (data) => {
+    const options = {
+        uri: 'http://localhost:3000',
+        method: 'POST',
+        body: data,
+        json: true        
+    }
+
+    request.post(options, (error, response, body) => {
+        console.log("body", body)
+    })
+}
+
 // Sleep 함수
 const sleep = (ms) => {
     const wakeUpTime = Date.now() + ms;
@@ -32,4 +47,6 @@ const sleep = (ms) => {
   }
 
 
-main()
+//main()
+
+call()
