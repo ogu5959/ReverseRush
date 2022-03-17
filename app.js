@@ -14,15 +14,13 @@ const midSleep  = 1000
 const main = () => {
 
     const arrCnt = config.list.length-1
-    let ms
 
     while(true) {
         for(i in config.list) {
             console.log(config.list[i].phone + " [" + i + "] " + arrCnt)
 
             // 마지막일경우 5초 중간은 1초
-            ms = ( i == arrCnt ) ? lastSleep : midSleep;
-            sleep(ms)
+            sleep( ( i == arrCnt ) ? lastSleep : midSleep )
         }
     }
 }
