@@ -8,20 +8,28 @@ const config = require('./config')
 // 모든건이 끝나면 20초 슬립
 
 // 슬립 설정
-const lastSleep = 5000
+const lastSleep = 2000
 const midSleep  = 1000
 
 // 메인 실행 함수
-const main = () => {
+const main = async () => {
 
+    // 전체건수
     const arrCnt = config.list.length-1
 
-    while(true) {
+    while(true) { 
         for(i in config.list) {
             console.log(config.list[i].phone + " [" + i + "] " + arrCnt)
 
+            let data = {
+                phone : config.list[i].phone,
+                indx : i,
+            }
+
+            call(data)
+
             // 마지막일경우 5초 중간은 1초
-            sleep( ( i == arrCnt ) ? lastSleep : midSleep )
+            await timer(( i == arrCnt ) ? lastSleep : midSleep)
         }
     }
 }
@@ -34,19 +42,15 @@ const call = (data) => {
         body: data,
         json: true        
     }
+    console.log(data)
 
     request.post(options, (error, response, body) => {
-        console.log("body", body)
+        console.log("body", body)    
     })
+    
 }
 
-// Sleep 함수
-const sleep = (ms) => {
-    const wakeUpTime = Date.now() + ms;
-    while (Date.now() < wakeUpTime) {}
-  }
+// Timer 함수
+const timer = ms => new Promise(res => setTimeout(res, ms))
 
-
-//main()
-
-call()
+main()
